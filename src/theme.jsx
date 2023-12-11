@@ -1,4 +1,6 @@
 import { createTheme } from '@mui/material/styles';
+import 'typeface-caveat'; // Import the Caveat font
+import 'typeface-pacifico'; // Import the Pacifico font
 
 const theme = createTheme({
   palette: {
@@ -11,10 +13,23 @@ const theme = createTheme({
   },
   typography: {
     h5: {
-      textAlign: 'center'
+      fontFamily: 'Caveat, cursive',
+      textAlign: 'center',
+      position: 'fixed',
+      top: 0,
+      zIndex: 1100,
+      padding: '10px',
+      width: '100%'
     },
     h6: {
-      textAlign: 'center'
+      fontFamily: 'Pacifico, cursive',
+      textAlign: 'center',
+      // Add the styles from App.jsx here
+      position: 'relative',
+      top: '50px', // Adjust this value to change the vertical position
+      zIndex: 1000,
+      padding: '10px',
+      width: '100%'
     },
     subtitle1: {
       fontWeight: 'bold'
@@ -25,39 +40,82 @@ const theme = createTheme({
     // Other typography styles
   },
   components: {
-    MuiContainer: {
+    MuiCssBaseline: {
       styleOverrides: {
-        root: {
-          // Assuming the container might use these styles
-          marginTop: '10px'
+        body: {
+          backgroundColor: 'lightgrey'
         }
       }
     },
     MuiBox: {
       styleOverrides: {
         root: {
-          // Styles for a flex box
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          // Other global box styles
-        },
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          // Styles for a sticky AppBar
           position: 'sticky',
           top: 40,
           zIndex: 1100,
           padding: '20px',
-          backgroundColor: 'white',
-          // Other global AppBar styles
-        },
-      },
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          backgroundColor: '#00730b'
+        }
+      }
     },
-    // Other component customizations
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          position: 'sticky',
+          top: 40,
+          zIndex: 1100,
+          padding: '20px',
+          backgroundColor: '#00730b'
+        }
+      }
+    },
+    MuiTextField: {
+      defaultProps: {
+        size: 'small',
+        margin: 'dense',
+        variant: 'outlined'
+      },
+      styleOverrides: {
+        root: {
+          marginBottom: '10px'
+        }
+      }
+    },
+    MuiButton: {
+      defaultProps: {
+        size: 'small',
+        variant: 'text'
+      },
+      styleOverrides: {
+        root: {
+          color: '#f5425a'
+        }
+      }
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          marginRight: '5px',
+          marginBottom: '5px',
+          size: 'small',
+          variant: 'outlined',
+          color: 'primary'
+        }
+      }
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          padding: '20px',
+          marginTop: 'auto',
+          textAlign: 'center',
+          backgroundColor: 'lightgrey'
+        }
+      }
+    }
   }
 });
 

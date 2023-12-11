@@ -19,24 +19,11 @@ import { useTheme } from '@mui/material/styles';
 
 const PortfolioItemComponent = ({ item, handleToggle, open }) => (
   <Card>
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-      }}
-    >
+    <Box>
       <Typography variant="subtitle1">{item.title}</Typography>
       <Box sx={{ marginTop: '10px' }}>
         {item.categories.map((category) => (
-          <Chip
-            key={category}
-            size="small"
-            variant="outlined"
-            label={category}
-            color="default"
-            sx={{ marginRight: '5px', marginBottom: '5px' }}
-          />
+          <Chip key={category} label={category} />
         ))}
       </Box>
     </Box>
@@ -46,18 +33,18 @@ const PortfolioItemComponent = ({ item, handleToggle, open }) => (
       image={item.imageUrl}
       alt={item.title}
     />
-<CardContent>
-  <Typography variant="subtitle2">{item.subtitle}</Typography>
-  <Typography variant="body1">{item.description}</Typography>
-  <Button onClick={() => handleToggle(item.id)}>
-    {open.has(item.id) ? 'Show less' : 'Show more'}
-  </Button>
-  <Collapse in={open.has(item.id)}>
-    <Box border={1} p={1} my={2}>
+    <CardContent>
+      <Typography variant="subtitle2">{item.subtitle}</Typography>
       <Typography variant="body1">{item.description}</Typography>
-    </Box>
-  </Collapse>
-</CardContent>
+      <Button onClick={() => handleToggle(item.id)}>
+        {open.has(item.id) ? 'Show less' : 'Show more'}
+      </Button>
+      <Collapse in={open.has(item.id)}>
+        <Box border={1} p={1} my={2}>
+          <Typography variant="body1">{item.description}</Typography>
+        </Box>
+      </Collapse>
+    </CardContent>
   </Card>
 );
 
@@ -120,58 +107,20 @@ const App = () => {
   return (
     <>
       <CssBaseline />
-      <Typography
-        variant="h5"
-        sx={{
-          position: 'fixed',
-          top: 0,
-          zIndex: 1100,
-          padding: '10px',
-          width: '100%',
-          backgroundColor: 'white'
-        }}
-      >
-        Bo Marcus Ohlsson
-      </Typography>
-      <Typography
-        variant="h6"
-        sx={{
-          position: 'relative',
-          top: '50px', // adjust this value to change the vertical position of "Sound Design"
-          zIndex: 1000,
-          padding: '10px',
-          width: '100%',
-          backgroundColor: 'white'
-        }}
-      >
-        Sound Design
-      </Typography>
+      <Typography variant="h5">Bo Marcus Ohlsson</Typography>
+      <Typography variant="h6">Sound Design</Typography>
       <Container maxWidth="md" sx={{ marginTop: '70px' }}>
-        <Box
-          sx={{
-            position: 'sticky',
-            top: 40,
-            zIndex: 1100,
-            padding: '20px',
-            backgroundColor: 'white'
-          }}
-        >
+        <Box>
           <TextField
             label="Search Projects"
-            variant="outlined"
             fullWidth
-            size="small"
-            margin="dense"
             onChange={handleSearchChange}
-            sx={{ marginBottom: '10px' }}
           />
-          <Box display="flex" justifyContent="center" mb={2}>
+          <Box mb={2}>
             {['tag1', 'tag2', 'tag3'].map((category) => (
               <Button
                 key={category}
-                variant="text"
                 onClick={() => handleFilterChange(category)}
-                size="small"
                 sx={{
                   color: activeFilters.has(category)
                     ? theme.palette.primary.main
@@ -195,10 +144,7 @@ const App = () => {
           ))}
         </Grid>
       </Container>
-      <Paper
-        component="footer"
-        sx={{ padding: '20px', marginTop: 'auto', textAlign: 'center' }}
-      >
+      <Paper component="footer">
         <Typography variant="subtitle1">
           © {new Date().getFullYear()} My Portfolio
         </Typography>
