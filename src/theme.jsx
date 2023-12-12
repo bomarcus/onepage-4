@@ -13,7 +13,7 @@ const theme = createTheme({
   },
   typography: {
     h5: {
-      fontFamily: 'Caveat, cursive',
+      fontFamily: 'roboto, cursive',
       textAlign: 'center',
       position: 'fixed',
       top: 0,
@@ -22,7 +22,7 @@ const theme = createTheme({
       width: '100%'
     },
     h6: {
-      fontFamily: 'Pacifico, cursive',
+      fontFamily: 'roboto, bold',
       textAlign: 'center',
       // Add the styles from App.jsx here
       position: 'relative',
@@ -91,7 +91,8 @@ const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          color: '#f5425a'
+          color: '#f5425a',
+          justifyContent: 'flex-start'
         }
       }
     },

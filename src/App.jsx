@@ -22,8 +22,8 @@ const PortfolioItemComponent = ({ item, handleToggle, open }) => (
     <Box>
       <Typography variant="subtitle1">{item.title}</Typography>
       <Box sx={{ marginTop: '10px' }}>
-        {item.categories.map((category) => (
-          <Chip key={category} label={category} />
+        {item.tags.map((tag) => (
+          <Chip key={tag} label={tag} />
         ))}
       </Box>
     </Box>
@@ -55,6 +55,7 @@ PortfolioItem.displayName = 'PortfolioItem';
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilters, setActiveFilters] = useState(new Set());
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [open, setOpen] = useState(new Set());
 
   const handleToggle = (id) => {
@@ -73,42 +74,53 @@ const App = () => {
     setSearchTerm(event.target.value);
   };
 
-  const handleFilterChange = (category) => {
+  const handleFilterChange = (tag) => {
     setActiveFilters((prevFilters) => {
       const newFilters = new Set(prevFilters);
-      if (newFilters.has(category)) {
-        newFilters.delete(category);
+      if (newFilters.has(tag)) {
+        newFilters.delete(tag);
       } else {
-        newFilters.add(category);
+        newFilters.add(tag);
       }
       return newFilters;
     });
   };
 
-  const filteredItems = useMemo(
-    () =>
-      portfolioItems.filter((item) => {
-        const searchLower = searchTerm.toLowerCase();
-        const matchesTitle = item.title.toLowerCase().includes(searchLower);
-        const matchesCategories = item.categories.some((category) =>
-          category.toLowerCase().includes(searchLower)
-        );
-        const matchesFilters =
-          activeFilters.size === 0 ||
-          item.categories.some((category) => activeFilters.has(category));
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setActiveFilters(new Set()); // Clear tag filters when a category is selected
+  };
 
-        return matchesFilters && (matchesTitle || matchesCategories);
-      }),
-    [searchTerm, activeFilters]
-  );
+  const filteredItems = useMemo(() => {
+    return portfolioItems.filter((item) => {
+      const searchLower = searchTerm.toLowerCase();
+      const matchesTitle = item.title.toLowerCase().includes(searchLower);
+      const matchesTags = item.tags?.some((tag) =>
+        tag.toLowerCase().includes(searchLower)
+      );
+      const matchesCategory = item.category
+        ?.toLowerCase()
+        .includes(searchLower);
+
+      const matchesFilters =
+        activeFilters.size === 0 ||
+        item.tags?.some((tag) => activeFilters.has(tag));
+
+      return (
+        (selectedCategory === '' || item.category === selectedCategory) &&
+        matchesFilters &&
+        (matchesTitle || matchesTags || matchesCategory)
+      );
+    });
+  }, [searchTerm, activeFilters, selectedCategory]);
 
   const theme = useTheme();
 
   return (
     <>
       <CssBaseline />
-      <Typography variant="h5">Bo Marcus Ohlsson</Typography>
-      <Typography variant="h6">Sound Design</Typography>
+      <Typography variant="h5">Title</Typography>
+      <Typography variant="h6">Subtitle</Typography>
       <Container maxWidth="md" sx={{ marginTop: '70px' }}>
         <Box>
           <TextField
@@ -116,22 +128,46 @@ const App = () => {
             fullWidth
             onChange={handleSearchChange}
           />
+          <Box mb={2} display="flex" justifyContent="space-around">
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => handleCategorySelect('category1')}
+            >
+              Category 1
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => handleCategorySelect('category2')}
+            >
+              Category 2
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => handleCategorySelect('category3')}
+            >
+              Category 3
+            </Button>
+          </Box>
           <Box mb={2}>
-            {['tag1', 'tag2', 'tag3'].map((category) => (
+            {['tag1', 'tag2', 'tag3'].map((tag) => (
               <Button
-                key={category}
-                onClick={() => handleFilterChange(category)}
+                key={tag}
+                onClick={() => handleFilterChange(tag)}
                 sx={{
-                  color: activeFilters.has(category)
+                  color: activeFilters.has(tag)
                     ? theme.palette.primary.main
                     : theme.palette.secondary.main
                 }}
               >
-                {category}
+                {tag}
               </Button>
             ))}
           </Box>
         </Box>
+
         <Grid container spacing={2}>
           {filteredItems.map((item) => (
             <Grid item xs={12} sm={12} md={12} key={item.id}>
@@ -146,7 +182,7 @@ const App = () => {
       </Container>
       <Paper component="footer">
         <Typography variant="subtitle1">
-          © {new Date().getFullYear()} My Portfolio
+          © {new Date().getFullYear()} footer
         </Typography>
       </Paper>
     </>
