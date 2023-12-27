@@ -1,123 +1,74 @@
 import { createTheme } from '@mui/material/styles';
-import 'typeface-caveat'; // Import the Caveat font
-import 'typeface-pacifico'; // Import the Pacifico font
 
+// Create a base theme object
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#00730b' // Green
-    },
-    secondary: {
-      main: '#9E9E9E' // Grey
-    }
-  },
   typography: {
+    fontFamily: "'Roboto', sans-serif",
+    fontSize: 24,
+    h1: {
+      fontSize: '2.5rem'
+    },
+    h2: {
+      fontSize: '2rem'
+    },
+    h3: {
+      fontSize: '1.75rem'
+    },
+    h4: {
+      fontSize: '1.5rem'
+    },
     h5: {
-      fontFamily: 'roboto, cursive',
-      textAlign: 'center',
-      position: 'fixed',
-      top: 0,
-      zIndex: 1100,
-      padding: '10px',
-      width: '100%'
+      fontSize: '1.25rem'
     },
     h6: {
-      fontFamily: 'roboto, bold',
-      textAlign: 'center',
-      // Add the styles from App.jsx here
-      position: 'relative',
-      top: '50px', // Adjust this value to change the vertical position
-      zIndex: 1000,
-      padding: '10px',
-      width: '100%'
+      fontSize: '1rem'
+    },
+    body1: {
+      fontSize: '1rem'
+    },
+    body2: {
+      fontSize: '0.875rem'
     },
     subtitle1: {
+      fontSize: '1.125rem',
       fontWeight: 'bold'
     },
     subtitle2: {
+      fontSize: '0.875rem',
       fontWeight: 'bold'
+    },
+    caption: {
+      fontSize: '0.75rem'
     }
-    // Other typography styles
   },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          backgroundColor: 'lightgrey'
-        }
-      }
+  palette: {
+    background: {
+      default: '#ffc107' // Default background color
     },
-    MuiBox: {
-      styleOverrides: {
-        root: {
-          position: 'sticky',
-          top: 40,
-          zIndex: 1100,
-          padding: '20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          backgroundColor: '#00730b'
-        }
-      }
+    primary: {
+      main: '#248f9c', // Your primary color
+      light: '#52c1c9', // A lighter shade of the primary color
+      dark: '#176973' // A darker shade of the primary color
     },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          position: 'sticky',
-          top: 40,
-          zIndex: 1100,
-          padding: '20px',
-          backgroundColor: '#00730b'
-        }
-      }
+    secondary: {
+      main: '#6c757d', // Your secondary color
+      light: '#949cad', // A lighter shade of the secondary color
+      dark: '#4d565f' // A darker shade of the secondary color
     },
-    MuiTextField: {
-      defaultProps: {
-        size: 'small',
-        margin: 'dense',
-        variant: 'outlined'
-      },
-      styleOverrides: {
-        root: {
-          marginBottom: '10px'
-        }
-      }
+    error: {
+      main: '#d32f2f' // Error color
     },
-    MuiButton: {
-      defaultProps: {
-        size: 'small',
-        variant: 'text'
-      },
-      styleOverrides: {
-        root: {
-          color: '#f5425a',
-          justifyContent: 'flex-start'
-        }
-      }
+    warning: {
+      main: '#ffc107' // Warning color
     },
-    MuiChip: {
-      styleOverrides: {
-        root: {
-          marginRight: '5px',
-          marginBottom: '5px',
-          size: 'small',
-          variant: 'outlined',
-          color: 'primary'
-        }
-      }
+    info: {
+      main: '#0288d1' // Info color
     },
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          padding: '20px',
-          marginTop: 'auto',
-          textAlign: 'center',
-          backgroundColor: 'lightgrey'
-        }
-      }
+    success: {
+      main: '#4caf50' // Success color
     }
   }
 });
 
+// Export the base theme object
 export default theme;

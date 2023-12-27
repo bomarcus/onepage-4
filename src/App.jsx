@@ -1,56 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import portfolioItems from './portfolioData.json';
-import {
-  Container,
-  TextField,
-  Button,
-  Card,
-  CardContent,
-  Typography,
-  Grid,
-  CardMedia,
-  Chip,
-  Box,
-  Paper,
-  Collapse,
-  CssBaseline
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-
-const PortfolioItemComponent = ({ item, handleToggle, open }) => (
-  <Card>
-    <Box>
-      <Typography variant="subtitle1">{item.title}</Typography>
-      <Box sx={{ marginTop: '10px' }}>
-        {item.tags.map((tag) => (
-          <Chip key={tag} label={tag} />
-        ))}
-      </Box>
-    </Box>
-    <CardMedia
-      component="img"
-      height="auto"
-      image={item.imageUrl}
-      alt={item.title}
-    />
-    <CardContent>
-      <Typography variant="subtitle2">{item.subtitle}</Typography>
-      <Typography variant="body1">{item.description}</Typography>
-      <Button onClick={() => handleToggle(item.id)}>
-        {open.has(item.id) ? 'Show less' : 'Show more'}
-      </Button>
-      <Collapse in={open.has(item.id)}>
-        <Box border={1} p={1} my={2}>
-          <Typography variant="body1">{item.description}</Typography>
-        </Box>
-      </Collapse>
-    </CardContent>
-  </Card>
-);
-
-const PortfolioItem = React.memo(PortfolioItemComponent);
-
-PortfolioItem.displayName = 'PortfolioItem';
+import { Container, Divider, useTheme, Box } from '@mui/material';
+import Header from './Header';
+import SearchBar from './SearchBar';
+import CategorySelector from './CategorySelector';
+import TagFilter from './TagFilter';
+import PortfolioList from './PortfolioList';
+import Footer from './Footer';
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -118,73 +74,34 @@ const App = () => {
 
   return (
     <>
-      <CssBaseline />
-      <Typography variant="h5">Title</Typography>
-      <Typography variant="h6">Subtitle</Typography>
-      <Container maxWidth="md" sx={{ marginTop: '70px' }}>
-        <Box>
-          <TextField
-            label="Search Projects"
-            fullWidth
-            onChange={handleSearchChange}
+      <Header />
+      <Box
+        sx={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 1100
+        }}
+      >
+        <Container maxWidth="md" sx={{ marginTop: '70px' }}>
+          <CategorySelector onSelectCategory={handleCategorySelect} />
+          <TagFilter
+            activeFilters={activeFilters}
+            onFilterChange={handleFilterChange}
+            onClearFilters={() => setActiveFilters(new Set())}
+            theme={theme}
           />
-          <Box mb={2} display="flex" justifyContent="space-around">
-            <Button
-              variant="contained"
-              size="large"
-              onClick={() => handleCategorySelect('category1')}
-            >
-              Category 1
-            </Button>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={() => handleCategorySelect('category2')}
-            >
-              Category 2
-            </Button>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={() => handleCategorySelect('category3')}
-            >
-              Category 3
-            </Button>
-          </Box>
-          <Box mb={2}>
-            {['tag1', 'tag2', 'tag3'].map((tag) => (
-              <Button
-                key={tag}
-                onClick={() => handleFilterChange(tag)}
-                sx={{
-                  color: activeFilters.has(tag)
-                    ? theme.palette.primary.main
-                    : theme.palette.secondary.main
-                }}
-              >
-                {tag}
-              </Button>
-            ))}
-          </Box>
-        </Box>
-
-        <Grid container spacing={2}>
-          {filteredItems.map((item) => (
-            <Grid item xs={12} sm={12} md={12} key={item.id}>
-              <PortfolioItem
-                item={item}
-                handleToggle={handleToggle}
-                open={open}
-              />
-            </Grid>
-          ))}
-        </Grid>
+          <SearchBar onSearchChange={handleSearchChange} />
+          <Divider orientation="horizontal" />
+        </Container>
+      </Box>
+      <Container maxWidth="md">
+        <PortfolioList
+          items={filteredItems}
+          handleToggle={handleToggle}
+          open={open}
+        />
       </Container>
-      <Paper component="footer">
-        <Typography variant="subtitle1">
-          © {new Date().getFullYear()} footer
-        </Typography>
-      </Paper>
+      <Footer />
     </>
   );
 };
