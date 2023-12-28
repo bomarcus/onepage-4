@@ -15,25 +15,33 @@ import PropTypes from 'prop-types';
 const PortfolioItemComponent = ({ item, handleToggle, open }) => (
   <Card>
     <Box>
-      <Typography variant="h1" align="center">{item.title}</Typography>
-      <Typography variant="h2" align="center">{item.production}</Typography>
-<Box
-  sx={{
-    marginTop: '10px',
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '10px',
-    justifyContent: 'center'
-  }}
->
-  {/* Displaying the category */}
-  <Chip label={`Category: ${item.category}`} color="primary" variant="outlined" />
+      <Typography variant="h1" align="center">
+        {item.title}
+      </Typography>
+      <Typography variant="h2" align="center">
+        {item.production}
+      </Typography>
+      <Box
+        sx={{
+          marginTop: '10px',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '10px',
+          justifyContent: 'center'
+        }}
+      >
+        {/* Displaying the category */}
+        <Chip
+          label={`Category: ${item.category}`}
+          color="primary"
+          variant="outlined"
+        />
 
-  {/* Displaying the tags */}
-  {item.tags.map((tag) => (
-    <Chip key={tag} label={tag} color="primary" variant="outlined" />
-  ))}
-</Box>
+        {/* Displaying the tags */}
+        {item.tags.map((tag) => (
+          <Chip key={tag} label={tag} color="primary" variant="outlined" />
+        ))}
+      </Box>
     </Box>
     <CardMedia
       component="img"
@@ -65,12 +73,11 @@ PortfolioItemComponent.propTypes = {
     imageUrl: PropTypes.string.isRequired,
     subtitle: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
   }).isRequired,
   handleToggle: PropTypes.func.isRequired,
-  open: PropTypes.instanceOf(Set).isRequired,
+  open: PropTypes.instanceOf(Set).isRequired
 };
-
 
 const PortfolioItem = React.memo(PortfolioItemComponent);
 

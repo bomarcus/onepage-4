@@ -82,7 +82,7 @@ const App = () => {
           zIndex: 1100
         }}
       >
-        <Container maxWidth="md" sx={{ marginTop: '70px' }}>
+        <Container maxWidth="md" sx={{ marginTop: '10px' }}>
           <CategorySelector onSelectCategory={handleCategorySelect} />
           <TagFilter
             activeFilters={activeFilters}
